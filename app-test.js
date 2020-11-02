@@ -8,18 +8,23 @@ const app = new Koa()
 
 // 注册
 
-
 app.use(async (ctx, next) => {
-  console.log('测试KOA中间件1')
-  const a = await next()
-  console.log(a)
+  console.log(ctx.path)
+  console.log(ctx.method)
 })
 
-app.use(async (ctx, next) => {
-  console.log('测试KOA中间件2')
-  // await next()
-  return 'abcdefg'
-})
+
+// app.use(async (ctx, next) => {
+//   console.log('测试KOA中间件1')
+//   const a = await next()
+//   console.log(a)
+// })
+
+// app.use(async (ctx, next) => {
+//   console.log('测试KOA中间件2')
+//   // await next()
+//   return 'abcdefg'
+// })
 
 
 // app.use( (ctx, next) => {
