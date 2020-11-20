@@ -4,6 +4,7 @@ const EntryManager = require('./Core/entryManager')
 const parser = require('koa-bodyparser')
 const catchError = require('./Middlewares/catchError')
 
+
 const app = new Koa()
 
 app.use(catchError)

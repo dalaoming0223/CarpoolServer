@@ -1,13 +1,28 @@
+/**
+ * 异常的捕获
+ */
+
 const {
   HttpException
 } = require('../Core/httpException')
+
 
 const catchError = async (ctx, next) => {
   try {
     await next()
   } catch (error) {
 
+
+    const isDev = global.config.environment  === 'dev'
     const isHttpException = error instanceof HttpException //是否是已知异常
+    
+    //开发环境下
+    if (isDev && !isHttpException) {
+      throw error
+    }
+
+
+    //生产环境下
     if (isHttpException) {
       
       //已知异常

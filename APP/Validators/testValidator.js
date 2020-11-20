@@ -13,6 +13,8 @@ class PositiveIntegerValidator extends LinValidator {
       super()
       this.id = [
           new Rule('isInt', '需要正整数', {min: 1})
+          //第一个参数是一个函数  取自于validator.js 中所定义的
+        
       ]
   }
 }
