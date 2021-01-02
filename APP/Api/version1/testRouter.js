@@ -3,6 +3,7 @@ const Router = require('koa-router')
 
 const { PositiveIntegerValidator } = require('../../Validators/testValidator')
 const { Auth } = require('../../../Middlewares/auth')
+const { User } = require('../../Models/userModel')
 const router = new Router()
 
 
@@ -26,12 +27,20 @@ router.post('/v1/:id/testPost',async (ctx, next) => {
 
 });
 
-// 测试用JWT(Token)保护API
+// 测试专用JWT(Token)保护API
 router.get('/v1/latest', new Auth().tokenVerify, async(ctx, next) => {
   //权限分级
   ctx.body = {
     uid:ctx.auth.uid,
     scope: ctx.auth.scope
+  }
+})
+
+// 测试专用接口
+router.get('/v1/getalluser', new Auth().tokenVerify, async(ctx, next) => {
+  const AllUser = await User.getAllUser()
+  ctx.body = {
+    alluser: AllUser
   }
 })
 

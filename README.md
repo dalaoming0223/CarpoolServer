@@ -95,4 +95,3 @@ validator
 508 "loop detected"
 510 "not extended"
 511 "network authentication required"
-注意: 不用太在意记住这些字符串, 如果你写错了,可以查阅这个列表随时更正.

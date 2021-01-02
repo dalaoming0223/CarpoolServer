@@ -9,9 +9,7 @@ const {
 
 
 class User extends Model {
-
   static async checkEmailPassword(email, checkpassword) {
-
     // console.log(email, checkpassword)
     //根据Email查询用户
     const user = await User.findOne({
@@ -33,23 +31,30 @@ class User extends Model {
 
     return user
   }
-
+  // 静态方法
   static async getUserByOpenID(openid) {
     const user = await User.findOne({
-      where:{
+      where: {
         openid
       }
     })
     return user
   }
 
+  // 静态方法
   static async createUserByOpenID(openid) {
-    const user =  await User.create({
+    const user = await User.create({
       openid
     })
     return user
   }
 
+
+  // 静态方法
+  static async getAllUser(){
+    const user = await User.findAll()
+    return user
+  }
 }
 
 // User表初始化

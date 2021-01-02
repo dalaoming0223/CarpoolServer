@@ -1,3 +1,7 @@
+/**
+ * @class Auth 鉴权
+ */
+
 const basicAuth = require('basic-auth')
 const jwt = require('jsonwebtoken')
 
@@ -47,6 +51,7 @@ class Auth {
         throw new global.errs.Forbidden(errMsg)
       }
 
+      //返回到auth
       ctx.auth = {
         uid: decode.uid,
         scope: decode.scope

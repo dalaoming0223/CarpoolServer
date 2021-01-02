@@ -1,5 +1,5 @@
 const Router = require('koa-router')
-const { TokenValidator } = require('../../Validators/tokenValidator')
+const { TokenValidator, TokenNotEmptyValidator} = require('../../Validators/tokenValidator')
 const { User } = require('../../Models/userModel')
 const { LoginType } = require('../../../Config/constant')
 const { Auth } = require('../../../Middlewares/auth')
@@ -16,9 +16,9 @@ router.post('/', async (ctx, next) => {
   const tokenParams = await new TokenValidator().validate(ctx)
   // handleResult('TOKEN 生成成功')
   const type = tokenParams.get('body.type')
-  const account = tokenParams.get('body.account') //  用户账号(目前以邮箱作为用户账号)
-  const secret = tokenParams.get('body.secret')   //  用户登录密码
-  const code = tokenParams.get('body.code')   //  用户登录密码
+  const account = tokenParams.get('body.account') //  账号密码用户账号(目前以邮箱作为用户账号)
+  const secret = tokenParams.get('body.secret')   //  账号密码用户登录密码
+  const code = tokenParams.get('body.code')   //  微信用户登录code
   // console.log('能走到这里吗')
   let token 
 
@@ -43,6 +43,16 @@ router.post('/', async (ctx, next) => {
 
   ctx.body = {
     token
+  }
+})
+
+//  废弃
+router.post('/verify', async(ctx)=> {
+  // token 验证
+  const params = await new TokenNotEmptyValidator().validate(ctx)
+  const result = Auth.verifyToken(params.get('body.token'))
+  ctx.body = {
+    result
   }
 })
 
