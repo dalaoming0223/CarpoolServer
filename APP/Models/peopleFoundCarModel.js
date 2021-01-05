@@ -22,6 +22,6 @@ PeopleFoundCar.init({
     }
 )
 
-module.exports = {
-  PeopleFoundCar
-}
+// module.exports = {
+//   PeopleFoundCar
+// }

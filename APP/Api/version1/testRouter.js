@@ -4,6 +4,8 @@ const Router = require('koa-router')
 const { PositiveIntegerValidator } = require('../../Validators/testValidator')
 const { Auth } = require('../../../Middlewares/auth')
 const { User } = require('../../Models/userModel')
+const { TicketBusiness } = require('../../Models/TicketBusinessModel')
+const { GetBusinessData } = require('../../Models/getBusinessDataModel')
 const router = new Router()
 
 
@@ -30,10 +32,25 @@ router.post('/v1/:id/testPost',async (ctx, next) => {
 // 测试专用JWT(Token)保护API
 router.get('/v1/latest', new Auth().tokenVerify, async(ctx, next) => {
   //权限分级
-  ctx.body = {
-    uid:ctx.auth.uid,
-    scope: ctx.auth.scope
+  // ctx.body = {
+  //   uid:ctx.auth.uid,
+  //   scope: ctx.auth.scope
+  // }
+  try {
+    const ticket_business = await TicketBusiness.findOne({
+      order: [
+        ['index','DESC']
+      ]
+    })
+    const ticket_data = await GetBusinessData.getData(ticket_business.ticketId, ticket_business.type)
+    // 序列化操作！ 必须的
+    // ticket_business.dataValues.index = ticket_data.index
+    ticket_data.setDataValue('index',ticket_data.index)
+    ctx.body = ticket_data
+  } catch (error) {
+    console.log(err)
   }
+
 })
 
 // 测试专用接口

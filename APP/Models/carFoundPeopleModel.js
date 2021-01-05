@@ -38,6 +38,6 @@ CarFoundPeople.init({
   tableName: 'carfoundpeople'
 })
 
-module.exports = {
-  CarFoundPeople
-}
+// module.exports = {
+//   CarFoundPeople
+// }

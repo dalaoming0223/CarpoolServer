@@ -10,7 +10,7 @@ module.exports = {
   security: {
     secretKey: 'dalaoming',
     // 过期时间 1小时
-    expiresIn: 60
+    expiresIn: 60 * 60
   },
   wx :{
     appId: 'wx6ba67bcfdd63a87b',
