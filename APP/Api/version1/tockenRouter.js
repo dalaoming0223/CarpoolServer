@@ -30,7 +30,9 @@ router.post('/', async (ctx, next) => {
     case LoginType.USER_MINI_PROGRAM:
       // code
       console.log('打印从wechat端传过来的code：',code)
-      token = await WeChatController.codeToToken(code)
+      // token,openid = await WeChatController.codeToToken(code)
+      arr = await WeChatController.codeToToken(code)
+      console.log(arr)
       break;
     
     case LoginType.ADMIN_EMAIL:
@@ -42,7 +44,8 @@ router.post('/', async (ctx, next) => {
   }
 
   ctx.body = {
-    token
+    token: arr[0],
+    openid: arr[1]
   }
 })
 

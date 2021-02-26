@@ -1,17 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="84e1d53f-b183-4c9e-b615-c06649e465e4" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/APP/Api/version1/testRouter.js" beforeDir="false" afterPath="$PROJECT_DIR$/APP/Api/version1/testRouter.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/APP/Api/version1/tockenRouter.js" beforeDir="false" afterPath="$PROJECT_DIR$/APP/Api/version1/tockenRouter.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/APP/Models/userModel.js" beforeDir="false" afterPath="$PROJECT_DIR$/APP/Models/userModel.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/APP/Validators/tokenValidator.js" beforeDir="false" afterPath="$PROJECT_DIR$/APP/Validators/tokenValidator.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Config/config.js" beforeDir="false" afterPath="$PROJECT_DIR$/Config/config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Core/generateToken.js" beforeDir="false" afterPath="$PROJECT_DIR$/Core/generateToken.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Middlewares/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/Middlewares/auth.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-    </list>
+    <list default="true" id="84e1d53f-b183-4c9e-b615-c06649e465e4" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -68,6 +58,7 @@
       <workItem from="1607485462260" duration="2872000" />
       <workItem from="1608107091961" duration="1966000" />
       <workItem from="1608884198186" duration="804000" />
+      <workItem from="1609865447529" duration="3000" />
     </task>
     <servers />
   </component>

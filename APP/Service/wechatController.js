@@ -38,9 +38,11 @@ class WeChatController {
     // 如果不存在，就创建一个微信小程序用户
     if (!user) {
       user = await User.createUserByOpenID(result.data.openid)
+    }else {
+      console.log("该用户已经存在在数据库中")
     }
 
-    return generateToken(user.id, Auth.NORMAL_USER)
+    return [generateToken(user.id, Auth.NORMAL_USER), result.data.openid]
   }
 
 }

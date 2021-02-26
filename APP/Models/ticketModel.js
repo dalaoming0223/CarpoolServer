@@ -34,6 +34,9 @@ class DriverFindStudent extends Model {
 
 }
 
+/**
+ * 模型初始化
+ */
 DriverFindStudent.init(PublicAttribute, {
   sequelize,
   tableName: 'DriverFindStudent'

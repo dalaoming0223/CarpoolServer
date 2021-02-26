@@ -48,7 +48,7 @@ router.get('/v1/latest', new Auth().tokenVerify, async(ctx, next) => {
     ticket_data.setDataValue('index',ticket_data.index)
     ctx.body = ticket_data
   } catch (error) {
-    console.log(err)
+    console.log('---testRouter---出错',err)
   }
 
 })
