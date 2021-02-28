@@ -1,7 +1,7 @@
 const util = require('util')
 const axios = require('axios')
 
-const { User } = require('../Models/userModel')
+const { User } = require('../Models/db')
 const { generateToken } = require('../../Core/generateToken')
 const { Auth } = require('../../Middlewares/auth')
 /**
@@ -38,11 +38,12 @@ class WeChatController {
     // 如果不存在，就创建一个微信小程序用户
     if (!user) {
       user = await User.createUserByOpenID(result.data.openid)
-    }else {
-      console.log("该用户已经存在在数据库中")
     }
+    // else {
+    //   console.log("该用户已经存在在数据库中")
+    // }
 
-    return [generateToken(user.id, Auth.NORMAL_USER), result.data.openid]
+    return [generateToken(user.id, Auth.NORMAL_USER), result.data.openid , user.id]
   }
 
 }

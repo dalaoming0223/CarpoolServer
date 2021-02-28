@@ -1,6 +1,7 @@
 const Router = require('koa-router')
 const { TokenValidator, TokenNotEmptyValidator} = require('../../Validators/tokenValidator')
-const { User } = require('../../Models/userModel')
+// const { User } = require('../../Models/userModel')
+const { User } = require('../../Models/db')
 const { LoginType } = require('../../../Config/constant')
 const { Auth } = require('../../../Middlewares/auth')
 const { generateToken } = require('../../../Core/generateToken')
@@ -29,10 +30,10 @@ router.post('/', async (ctx, next) => {
     
     case LoginType.USER_MINI_PROGRAM:
       // code
-      console.log('打印从wechat端传过来的code：',code)
+      // console.log('打印从wechat端传过来的code：',code)
       // token,openid = await WeChatController.codeToToken(code)
       arr = await WeChatController.codeToToken(code)
-      console.log(arr)
+      // console.log(arr)
       break;
     
     case LoginType.ADMIN_EMAIL:
@@ -45,7 +46,8 @@ router.post('/', async (ctx, next) => {
 
   ctx.body = {
     token: arr[0],
-    openid: arr[1]
+    openid: arr[1],
+    userid: arr[2]
   }
 })
 

@@ -1,6 +1,5 @@
 const Sequelize = require('sequelize');
 
-
 const {
   dbName,
   host,
@@ -8,6 +7,9 @@ const {
   user,
   password
 } = require('../Config/config').database
+
+
+
 
 const sequelize = new Sequelize(dbName, user, password, {
   dialect: 'mysql',
@@ -30,11 +32,19 @@ const sequelize = new Sequelize(dbName, user, password, {
   }
 })
 
-sequelize.sync({force:false})
-  .then(async () => console.log("请注意：-----tables created!-----"))
-  .catch(err => {
-    console.error('!!!请注意!!!!Unable to connect to the database:', err);
-  })
+// sequelize.authenticate().then(async () => {
+//     console.log("连接开始")
+    
+//     User.hasMany(driverPublish,{foreignKey: {name: 'user_id', allowNull: false}, onDelete: 'CASCADE'})
+//     driverPublish.belongsToMany(User)
+    
+    
+//     sequelize.sync({force:false}).then(async () => {
+//       console.log('tables created!');
+//   })
+// }).catch(err => {
+//     console.error('!!!请注意!!!!Unable to connect to the database:', err);
+//   })
 
 module.exports = {
   sequelize

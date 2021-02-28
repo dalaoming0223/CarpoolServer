@@ -3,8 +3,7 @@ const Router = require('koa-router')
 
 const { PositiveIntegerValidator } = require('../../Validators/testValidator')
 const { Auth } = require('../../../Middlewares/auth')
-const { User } = require('../../Models/userModel')
-const { TicketBusiness } = require('../../Models/TicketBusinessModel')
+const { User } = require('../../Models/db')
 const { GetBusinessData } = require('../../Models/getBusinessDataModel')
 const router = new Router()
 

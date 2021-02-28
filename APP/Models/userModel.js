@@ -49,7 +49,6 @@ class User extends Model {
     return user
   }
 
-
   // 静态方法
   static async getAllUser(){
     const user = await User.findAll()
