@@ -24,6 +24,7 @@ const PublicAttribute = {
   personNum: {type: Sequelize.STRING(10)},
   start_time: {type: Sequelize.STRING(32)},
   note: {type: Sequelize.STRING(10)},
+  start_name: {type: Sequelize.STRING(64)},
   start_address: {type: Sequelize.STRING(64)},//下面几个属性的整合体
   start_city: {type: Sequelize.STRING(64)},
   start_district: {type: Sequelize.STRING(64)},
@@ -31,6 +32,11 @@ const PublicAttribute = {
   start_province: {type: Sequelize.STRING(64)},
   start_street: {type: Sequelize.STRING(64)},
   start_streetnumber: {type: Sequelize.STRING(64)},
+  start_latitude:{type: Sequelize.FLOAT(9,6) },
+  start_longitude:{type: Sequelize.FLOAT(9,6) },
+  end_latitude:{type: Sequelize.FLOAT(9,6) },
+  end_longitude:{type: Sequelize.FLOAT(9,6) },
+  end_name: {type: Sequelize.STRING(64)},
   end_address: {type: Sequelize.STRING(64)},//下面几个属性的整合体
   end_city: {type: Sequelize.STRING(64)},
   end_district: {type: Sequelize.STRING(64)},

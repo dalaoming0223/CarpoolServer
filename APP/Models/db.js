@@ -1,7 +1,8 @@
 const {sequelize} = require('../../DB/dataBase')
 
 const {User} = require('../Models/userModel')
-const {driverPublish} = require('../Models/PublishModel')
+const {driverPublish, passengerPublish} = require('../Models/PublishModel')
+const {BBS} = require('../Models/bbsModel')
 
 sequelize.authenticate()
   .then(async () => {
@@ -9,12 +10,22 @@ sequelize.authenticate()
 
     User.hasMany(driverPublish, {foreignKey: {name: 'user_id',allowNull: false},onDelete: 'CASCADE'})
     driverPublish.belongsTo(User)
+    
+    User.hasMany(passengerPublish, {foreignKey: {name: 'user_id',allowNull: false},onDelete: 'CASCADE'})
+    passengerPublish.belongsTo(User)
+
+    User.hasMany(BBS, {foreignKey: {name: 'user_id',allowNull: false},onDelete: 'CASCADE'})
+    BBS.belongsTo(User)
+
+
+
     // driverPublish.belongsToMany(User)
 
 
     sequelize.sync({
-      force: false
-      // alter: true 
+      // force: true
+      // force: false
+      alter: true 
     }).then(async () => {
       // console.log('tables created!');
     })
@@ -25,5 +36,7 @@ sequelize.authenticate()
 
   module.exports = {
     User,
-    driverPublish
+    driverPublish,
+    passengerPublish,
+    BBS
   }

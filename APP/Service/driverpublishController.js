@@ -1,29 +1,33 @@
 const { User, driverPublish} = require('../Models/db')
 const { handleResult } = require('../../Core/callSuccessed')
 
-class PublishController {
+class driverPublishController {
   
   
   static async add_driverPublish(ctx, next){
 
     let {start,end,surplusSeat,price,time,date,phone,note,userid}=ctx.request.body.formData
     const start_address = ctx.request.body.formData.startAddressInfo.address
-    
+    const start_name = ctx.request.body.formData.startAddressInfo.name
     const start_city= ctx.request.body.formData.startAddressInfo.addressComponent.city
     const start_district= ctx.request.body.formData.startAddressInfo.addressComponent.district
     const start_nation= ctx.request.body.formData.startAddressInfo.addressComponent.nation
     const start_province= ctx.request.body.formData.startAddressInfo.addressComponent.province
     const start_street=  ctx.request.body.formData.startAddressInfo.addressComponent.street
     const start_streetnumber= ctx.request.body.formData.startAddressInfo.addressComponent.street_number
-    
-    const end_address = ctx.request.body.formData.endAddressInfo.address
+    const start_latitude = ctx.request.body.formData.startAddressInfo.latitude
+    const start_longitude = ctx.request.body.formData.startAddressInfo.longitude
 
+    const end_address = ctx.request.body.formData.endAddressInfo.address
+    const end_name = ctx.request.body.formData.endAddressInfo.name
     const end_city= ctx.request.body.formData.endAddressInfo.addressComponent.city
     const end_district= ctx.request.body.formData.endAddressInfo.addressComponent.district
     const end_nation= ctx.request.body.formData.endAddressInfo.addressComponent.nation
     const end_province= ctx.request.body.formData.endAddressInfo.addressComponent.province
     const end_street=  ctx.request.body.formData.endAddressInfo.addressComponent.street
     const end_streetnumber= ctx.request.body.formData.endAddressInfo.addressComponent.street_number
+    const end_latitude = ctx.request.body.formData.endAddressInfo.latitude
+    const end_longitude = ctx.request.body.formData.endAddressInfo.longitude
     // console.log(surplusSeat instanceof Array)
     // console.log('测试'+ start_city + end_city)
 
@@ -34,7 +38,8 @@ class PublishController {
         user_id: userid,
         phone,
         price,
-        personNum:surplusSeat,
+        personNum: surplusSeat,
+        start_name,
         start_time,
         start_address,
         start_city, 
@@ -42,7 +47,10 @@ class PublishController {
         start_nation, 
         start_province, 
         start_street,  
-        start_streetnumber, 
+        start_streetnumber,
+        start_latitude,
+        start_longitude,
+        end_name,
         end_address,  
         end_city, 
         end_district, 
@@ -50,6 +58,8 @@ class PublishController {
         end_province,
         end_street, 
         end_streetnumber,
+        end_latitude,
+        end_longitude,
         note
       })
       ctx.response.status = 200
@@ -115,15 +125,40 @@ class PublishController {
       }
     } catch (error) {
       console.log(error)
+      ctx.response.status = 400
     }
   }
 
   static async get_all_driverPublish(ctx){
-    
+    let queryResult = null
+    let currentPage = parseInt(ctx.request.query.page) || 1
+    // console.log(currentPage)
+    let sortBy = 'created_at'
+    let countPerPage = 5
+    try {
+      if (currentPage <= 0) {currentPage = 1}
+      queryResult = await driverPublish.findAndCountAll({
+        limit: countPerPage, //每页多少条
+        offset: countPerPage * (currentPage - 1), // 跳过多少条
+        order: [
+          [sortBy, 'DESC']
+        ],
+        distinct: true,
+        include: [{
+          model: User
+        }]
+      })
+      ctx.body = {
+        queryResult
+      }
+    } catch (error) {
+      ctx.response.status = 400
+    }
   }
 }
 
 
+
 module.exports = {
-  PublishController
+  driverPublishController
 }

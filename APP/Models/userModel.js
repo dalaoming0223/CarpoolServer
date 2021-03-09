@@ -42,9 +42,12 @@ class User extends Model {
   }
 
   // 静态方法
-  static async createUserByOpenID(openid) {
+  static async createUserByOpenID(userData) {
     const user = await User.create({
-      openid
+      openid: userData.openid,
+      avatarUrl: userData.avatarUrl,
+      nickName: userData.nickName,
+      nickname: userData.nickName
     })
     return user
   }
@@ -80,7 +83,9 @@ User.init({
   openid: {
     type: Sequelize.STRING(64),
     unique: true // 是否唯一
-  }
+  },
+  avatarUrl: Sequelize.STRING,
+  nickName: Sequelize.STRING
 }, {
   sequelize,
   tableName: 'user'

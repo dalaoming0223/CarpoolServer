@@ -1,7 +1,7 @@
 const Router = require('koa-router')
 
 const { handleResult } = require('../../../Core/callSuccessed')
-const { PublishController } = require('../../Service/publishController')
+const { driverPublishController } = require('../../Service/driverpublishController')
 
 const router = new Router({
     prefix: '/v1/driverPublish'
@@ -9,13 +9,17 @@ const router = new Router({
 
 
 router.post('/add',async (ctx, next) => {
-  await PublishController.add_driverPublish(ctx, next)
+  await driverPublishController.add_driverPublish(ctx, next)
   // handleResult('添加成功')
   
 })
 
 router.get('/:userid', async(ctx) => {
-  await PublishController.get_driverPublish_by_user_id(ctx)
+  await driverPublishController.get_driverPublish_by_user_id(ctx)
+})
+
+router.get('/', async(ctx) => {
+  await driverPublishController.get_all_driverPublish(ctx)
 })
 
 module.exports = router
