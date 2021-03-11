@@ -3,19 +3,20 @@ const {sequelize} = require('../../DB/dataBase')
 const {User} = require('../Models/userModel')
 const {driverPublish, passengerPublish} = require('../Models/PublishModel')
 const {BBS} = require('../Models/bbsModel')
+const {Driver} = require('../Models/driverModel')
 
 sequelize.authenticate()
   .then(async () => {
     // console.log("连接开始")
 
     User.hasMany(driverPublish, {foreignKey: {name: 'user_id',allowNull: false},onDelete: 'CASCADE'})
-    driverPublish.belongsTo(User)
+    // driverPublish.belongsTo(User)
     
     User.hasMany(passengerPublish, {foreignKey: {name: 'user_id',allowNull: false},onDelete: 'CASCADE'})
-    passengerPublish.belongsTo(User)
+    // passengerPublish.belongsTo(User)
 
     User.hasMany(BBS, {foreignKey: {name: 'user_id',allowNull: false},onDelete: 'CASCADE'})
-    BBS.belongsTo(User)
+    // BBS.belongsTo(User)
 
 
 
@@ -38,5 +39,6 @@ sequelize.authenticate()
     User,
     driverPublish,
     passengerPublish,
-    BBS
+    BBS,
+    Driver
   }

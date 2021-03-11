@@ -6,14 +6,14 @@ class BBS extends Model {
 
 }
 
-const BBS_Attribute = {
+const BBSAttribute = {
   bbs_id: {type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true},
   status: { type: Sequelize.INTEGER}, // 解释状态是否合法
   content: { type: Sequelize.TEXT}
 }
 
 
-BBS.init(BBS_Attribute, {
+BBS.init(BBSAttribute, {
   sequelize,
   tableName: 'BBS'
 })

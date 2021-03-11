@@ -6,8 +6,9 @@ const router = new Router({
     prefix: '/v1/passengerPublish'
 })
 
-router.get('/', async(ctx, next) => {
-  await passengerPublishController.add_passengerPublish(ctx ,next)
+router.post('/add', async(ctx, next) => {
+  console.log('执行添加')
+  await passengerPublishController.add_passengerPublish(ctx, next)
 })
 
 
@@ -20,4 +21,4 @@ router.get('/', async(ctx) => {
   await passengerPublishController.get_all_passengerPublish(ctx)
 })
 
-module.exports = Router
+module.exports = router

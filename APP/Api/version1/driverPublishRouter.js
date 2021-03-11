@@ -9,6 +9,7 @@ const router = new Router({
 
 
 router.post('/add',async (ctx, next) => {
+
   await driverPublishController.add_driverPublish(ctx, next)
   // handleResult('添加成功')
   
@@ -21,5 +22,14 @@ router.get('/:userid', async(ctx) => {
 router.get('/', async(ctx) => {
   await driverPublishController.get_all_driverPublish(ctx)
 })
+
+router.put('/update/:id', async(ctx) => {
+  driverPublishController.update_driverPublish(ctx)
+})
+
+router.delete('/delete/:id', async(ctx) => {
+  driverPublishController.delete_driverPublish(ctx)
+})
+
 
 module.exports = router

@@ -1,11 +1,11 @@
 const { User, driverPublish} = require('../Models/db')
-const { handleResult } = require('../../Core/callSuccessed')
+const { response } = require('./response')
 
 class driverPublishController {
   
   
   static async add_driverPublish(ctx, next){
-
+    let ret_data = {}
     let {start,end,surplusSeat,price,time,date,phone,note,userid}=ctx.request.body.formData
     const start_address = ctx.request.body.formData.startAddressInfo.address
     const start_name = ctx.request.body.formData.startAddressInfo.name
@@ -62,19 +62,14 @@ class driverPublishController {
         end_longitude,
         note
       })
-      ctx.response.status = 200
-      ctx.body = {
-        msg: '添加成功'
-      }
+
+      ret_data.id = driverpublish.id
+      response(ctx, ret_data, 201)
     } catch (error) {
-      console.log('加入blog时错误的信息',error)
-      ctx.response.status = 400
-      ctx.body = {
-        msg: '添加失败'
-      }
+      response(ctx, ret_data , 400)
     }
 
-    ctx.response.status = 200;
+    // ctx.response.status = 200;
   }
 
   static async get_driverPublish_by_user_id(ctx){
@@ -85,7 +80,7 @@ class driverPublishController {
     let queryResult = null
     let sortBy = 'start_time'
     try {
-      if(isSortByStartTime==true){
+      if(isSortByStartTime===true){
         /**
          * 根据出发时间排序
          */
@@ -134,6 +129,7 @@ class driverPublishController {
     let currentPage = parseInt(ctx.request.query.page) || 1
     // console.log(currentPage)
     let sortBy = 'created_at'
+    // let sortBy = 'start_time'
     let countPerPage = 5
     try {
       if (currentPage <= 0) {currentPage = 1}
@@ -144,16 +140,66 @@ class driverPublishController {
           [sortBy, 'DESC']
         ],
         distinct: true,
+        // include: [{
+        //   model: User
+        // }]
+
         include: [{
-          model: User
+            association: driverPublish.belongsTo(User,
+                {
+                    foreignKey: 'user_id',
+                }),
+            attributes: ['avatar_url', 'nick_name'],
         }]
       })
       ctx.body = {
         queryResult
       }
     } catch (error) {
+      console.log(error)
       ctx.response.status = 400
     }
+  }
+
+  static async delete_driverPublish(ctx) {
+    let ret_data = {}
+    let driver_publish_id = ctx.request.params.id
+    if (driver_publish_id) {
+      try {
+        let driverPublish = await driverPublish.destroy(
+          {
+            where: {id : driver_publish_id}
+          }
+        )
+        // if (driverPublish === null){
+        //   // ctx.response.status = 404
+        //   // ctx.body = {
+        //   //   msg: 'Not found'
+        //   // }
+        //   response(ctx, ret_data, 404)
+        // }
+        // else {
+        //   ctx.body = {
+        //     msg: ''
+        //   }
+        // }
+        if (driverPublish > 0) {
+          response(res, ret_data, 200, -1);
+        }
+        else {
+          response(res, ret_data, 404);
+        }
+      } catch (error) {
+        console.log('error.message',error.message)
+      }
+    }
+  }
+
+  static async update_driverPublish(ctx) {
+    let ret_data = {}
+    let {start,end,surplusSeat,price,time,date,phone,note} = ctx.request.body.formData
+    let updated_at = 
+    console.log(ctx.req)
   }
 }
 

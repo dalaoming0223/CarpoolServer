@@ -35,8 +35,9 @@ response = (ctx, ret_data, code,kind,msg) => {
   // res.status(code).send(JSON.stringify(ret_data))
   // res.writeHead(code, {'Content-Type': 'application/json'});
   // res.end(JSON.stringify(ret_data));
+  ctx.response.code = code
   ctx.body = {
-    
+    ret_data
   }
 };
 
