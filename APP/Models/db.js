@@ -3,6 +3,8 @@ const {sequelize} = require('../../DB/dataBase')
 const {User} = require('../Models/userModel')
 const {driverPublish, passengerPublish} = require('../Models/PublishModel')
 const {BBS} = require('../Models/bbsModel')
+const {bbsComment} = require('../Models/bbscommentModel')
+const {bbsLike} = require('../Models/bbslikeModel')
 const {Driver} = require('../Models/driverModel')
 
 sequelize.authenticate()
@@ -18,15 +20,15 @@ sequelize.authenticate()
     User.hasMany(BBS, {foreignKey: {name: 'user_id',allowNull: false},onDelete: 'CASCADE'})
     // BBS.belongsTo(User)
 
-
-
+    BBS.hasMany(bbsComment ,{foreignKey: {name: 'bbs_id', allowNull: false}, onDelete: 'CASCADE'})
+    BBS.hasMany(bbsLike,{foreignKey: {name: 'bbs_id', allowNull: false}, onDelete: 'CASCADE'})
     // driverPublish.belongsToMany(User)
 
 
     sequelize.sync({
       // force: true
       // force: false
-      alter: true 
+      // alter: true 
     }).then(async () => {
       // console.log('tables created!');
     })

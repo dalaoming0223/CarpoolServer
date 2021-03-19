@@ -16,7 +16,7 @@ const driverAttribute = {
   id_card: {type: Sequelize.STRING}
 }
 
-driver.init(driverAttribute,{
+Driver.init(driverAttribute,{
   sequelize,
   tableName: 'driver'
 })
