@@ -20,6 +20,9 @@ sequelize.authenticate()
     User.hasMany(BBS, {foreignKey: {name: 'user_id',allowNull: false},onDelete: 'CASCADE'})
     // BBS.belongsTo(User)
 
+    User.hasMany(bbsComment, {foreignKey: {name: 'user_id',allowNull: false},onDelete: 'CASCADE'})
+    User.hasMany(bbsLike, {foreignKey: {name: 'user_id',allowNull: false},onDelete: 'CASCADE'})
+    
     BBS.hasMany(bbsComment ,{foreignKey: {name: 'bbs_id', allowNull: false}, onDelete: 'CASCADE'})
     BBS.hasMany(bbsLike,{foreignKey: {name: 'bbs_id', allowNull: false}, onDelete: 'CASCADE'})
     // driverPublish.belongsToMany(User)
@@ -42,5 +45,7 @@ sequelize.authenticate()
     driverPublish,
     passengerPublish,
     BBS,
+    bbsComment,
+    bbsLike,
     Driver
   }

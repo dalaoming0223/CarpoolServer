@@ -1,4 +1,4 @@
-const {User, BBS} = require('../Models/db')
+const {User, BBS, bbsComment, bbsLike} = require('../Models/db')
 
 const { response } = require('./response')
 
@@ -63,6 +63,28 @@ class bbsController {
       
     }
   }
+
+  // 评论
+  static async add_bbs_comment  (ctx) {
+    let ret_data = {}
+    let { content, bbs_id, user_id} = ctx.request.body
+    // console.log(content,bbs_id, user_id)
+    try {
+      let comment = await bbsComment.create({
+        content,
+        bbs_id,
+        user_id
+      })
+
+      ret_data['bbs_id'] = comment.bbs_id
+      response(ctx, ret_data, 201)
+    } catch (error) {
+      console.log(error)
+      response(ctx, ret_data, 400)
+    }
+  }
+
+  //添加评论
 }
 
 module.exports = {
