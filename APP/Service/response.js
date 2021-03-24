@@ -37,7 +37,8 @@ response = (ctx, ret_data, code,kind,msg) => {
   // res.end(JSON.stringify(ret_data));
   ctx.response.code = code
   ctx.body = {
-    ret_data
+    ret_data,
+    code
   }
 };
 

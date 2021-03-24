@@ -15,6 +15,8 @@ const bbsCommentAttribute = {
   // state: {type: Sequelize.SMALLINT, allowNull: false, defaultValue: 1},
 
   is_top: {type: Sequelize.BOOLEAN, allowNull: false, defaultValue: false},
+
+  status: {type: Sequelize.SMALLINT, allowNull: false, defaultValue: 1}
 }
 
 

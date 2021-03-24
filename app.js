@@ -3,7 +3,7 @@ const Koa = require('koa')
 const EntryManager = require('./Core/entryManager')
 const Bodyparser = require('koa-bodyparser')
 const catchError = require('./Middlewares/catchError')
-
+const koa2cors = require('koa2-cors')
 
 const app = new Koa()
 
@@ -14,6 +14,7 @@ app.use(Bodyparser())
 //   // if nothing was parsed, body will be an empty object {}
 //   ctx.body = ctx.request.body;
 // });
+app.use(koa2cors())
 EntryManager.initCore(app)
 
 app.listen(3000)

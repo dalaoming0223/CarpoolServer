@@ -1,15 +1,11 @@
 const { sequelize } = require('../../DB/dataBase')
 const { Sequelize, Model } = require('sequelize')
 
-
-
-
-
 class driverPublish extends Model {
 
 }
 
-
+class driverPublishParticipants extends Model {}
 
 
 class passengerPublish extends Model {
@@ -43,7 +39,8 @@ const PublicAttribute = {
   end_nation: {type: Sequelize.STRING(64)},
   end_province: {type: Sequelize.STRING(64)},
   end_street: {type: Sequelize.STRING(64)},
-  end_streetnumber: {type: Sequelize.STRING(64)}
+  end_streetnumber: {type: Sequelize.STRING(64)},
+  status: {type: Sequelize.STRING(64)}
 }
 
 
@@ -51,6 +48,16 @@ driverPublish.init(PublicAttribute, {
   sequelize,
   tableName: 'driverPublish'
 })
+
+driverPublishParticipants.init(
+  {
+    id: {type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true},
+  },
+  {
+    sequelize,
+    tableName: 'driverPublishParticipants'
+  }
+)
 
 passengerPublish.init(PublicAttribute, {
   sequelize,

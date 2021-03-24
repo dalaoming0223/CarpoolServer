@@ -73,6 +73,7 @@ class driverPublishController {
   }
 
   static async get_driverPublish_by_user_id(ctx){
+    let ret_data ={}
     // console.log(ctx.request.params.userid)
     // console.log(ctx.request.query)
     let userid = ctx.request.params.userid
@@ -115,22 +116,28 @@ class driverPublishController {
       }
 
       // console.log(queryResult)
-      ctx.body = {
-        queryResult
+      ret_data= {
+        'queryResult': queryResult
       }
+      // ctx.body = {
+      //   queryResult
+      // }
+      response(ctx, ret_data, 200)
     } catch (error) {
       console.log(error)
-      ctx.response.status = 400
+      // ctx.response.status = 400
+      response(ctx, ret_data, 400)
     }
   }
 
   static async get_all_driverPublish(ctx){
+    let ret_data ={}
     let queryResult = null
     let currentPage = parseInt(ctx.request.query.page) || 1
     // console.log(currentPage)
     let sortBy = 'created_at'
     // let sortBy = 'start_time'
-    let countPerPage = 5
+    let countPerPage = parseInt(ctx.request.query.limit)|| 5
     try {
       if (currentPage <= 0) {currentPage = 1}
       queryResult = await driverPublish.findAndCountAll({
@@ -152,9 +159,13 @@ class driverPublishController {
             attributes: ['avatar_url', 'nick_name'],
         }]
       })
-      ctx.body = {
-        queryResult
+      // ctx.body = {
+      //   queryResult
+      // }
+      ret_data = {
+        'queryResult': queryResult
       }
+      response(ctx,ret_data,20000)
     } catch (error) {
       console.log(error)
       ctx.response.status = 400

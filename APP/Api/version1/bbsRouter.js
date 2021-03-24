@@ -16,10 +16,14 @@ router.get('/', async(ctx) =>{
 })
 
 
-// 添加评论
+// 评论相关
 
 router.post('/addcomment', async (ctx) =>{
   await bbsController.add_bbs_comment(ctx)
 })
 
+
+router.get('/getcomment/:bbs_id', async(ctx)=>{
+  await bbsController.get_bbs_comment_by_bbsID(ctx)
+})
 module.exports = router

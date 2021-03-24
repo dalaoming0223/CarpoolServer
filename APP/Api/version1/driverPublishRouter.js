@@ -20,6 +20,7 @@ router.get('/:userid', async(ctx) => {
 })
 
 router.get('/', async(ctx) => {
+  // console.log('有人请求全部driverpublish')
   await driverPublishController.get_all_driverPublish(ctx)
 })
 
