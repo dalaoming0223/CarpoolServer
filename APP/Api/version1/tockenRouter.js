@@ -20,6 +20,15 @@ router.post('/', async (ctx, next) => {
   const account = tokenParams.get('body.account') //  账号密码用户账号(目前以邮箱作为用户账号)
   const secret = tokenParams.get('body.secret')   //  账号密码用户登录密码
   const code = tokenParams.get('body.code')   //  微信用户登录code
+  const avatar_url = tokenParams.get('body.avatar_url')
+  const nick_name = tokenParams.get('body.nick_name')
+
+  const user_info = {
+    avatar_url,
+    nick_name
+  }
+
+  // console.log(user_info)
   // console.log('能走到这里吗')
   let token 
 
@@ -32,7 +41,7 @@ router.post('/', async (ctx, next) => {
       // code
       // console.log('打印从wechat端传过来的code：',code)
       // token,openid = await WeChatController.codeToToken(code)
-      arr = await WeChatController.codeToToken(code)
+      arr = await WeChatController.codeToToken(code,user_info)
       // console.log(arr)
       break;
     

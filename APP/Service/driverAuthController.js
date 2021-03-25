@@ -5,7 +5,7 @@ class driverAuthController {
   
   static async add_driver(ctx) {
     let ret_data = {}
-    let { realname,user_id, carnum, cartype, phone, fileIds} = ctx.request.body.form
+    let { realname,user_id, idnum, carnum, cartype, phone, fileIds} = ctx.request.body.form
     // console.log(realname)
     try {
       let user = await Driver.findOne({
@@ -24,7 +24,8 @@ class driverAuthController {
             plate_number: carnum,
             phone_number: phone,
             driver_license: fileIds,
-            car_type: cartype
+            car_type: cartype,
+            id_card: idnum
 
         })
         ret_data['msg'] = '创建成功，待审核'
@@ -52,6 +53,7 @@ class driverAuthController {
           user_id
         }
       })
+
       if(driver){
         ret_data['driver_list'] = driver       
       }

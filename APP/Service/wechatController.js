@@ -10,7 +10,7 @@ const { Auth } = require('../../Middlewares/auth')
 
 class WeChatController {
 
-  static async codeToToken(code) {
+  static async codeToToken(code, user_info) {
 
     // 格式化url  替换掉 %s 
     const url = util.format(
@@ -38,7 +38,7 @@ class WeChatController {
 
     // 如果不存在，就创建一个微信小程序用户
     if (!user) {
-      user = await User.createUserByOpenID(result.data)
+      user = await User.createUserByOpenID(result.data, user_info)
     }
     // else {
     //   console.log("该用户已经存在在数据库中")

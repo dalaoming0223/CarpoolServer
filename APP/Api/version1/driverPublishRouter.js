@@ -20,7 +20,6 @@ router.get('/:userid', async(ctx) => {
 })
 
 router.get('/', async(ctx) => {
-  // console.log('有人请求全部driverpublish')
   await driverPublishController.get_all_driverPublish(ctx)
 })
 
@@ -30,6 +29,11 @@ router.put('/update/:id', async(ctx) => {
 
 router.delete('/delete/:id', async(ctx) => {
   driverPublishController.delete_driverPublish(ctx)
+})
+
+// 往司机发布的订单里面加参与人
+router.post('/addParticipator' ,async (ctx) => {
+  await driverPublishController.add_driverPublish_participator(ctx)
 })
 
 

@@ -42,12 +42,12 @@ class User extends Model {
   }
 
   // 静态方法
-  static async createUserByOpenID(userData) {
+  static async createUserByOpenID(userData, user_info) {
+    console.log(user_info.avatar_url)
     const user = await User.create({
       openid: userData.openid,
-      avatarUrl: userData.avatarUrl,
-      nickName: userData.nickName,
-      nickname: userData.nickName
+      avatarUrl: user_info.avatar_url,
+      nickName: user_info.nick_name
     })
     return user
   }

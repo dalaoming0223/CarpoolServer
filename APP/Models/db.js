@@ -6,6 +6,7 @@ const {BBS} = require('../Models/bbsModel')
 const {bbsComment} = require('../Models/bbscommentModel')
 const {bbsLike} = require('../Models/bbslikeModel')
 const {Driver} = require('../Models/driverModel')
+const {driverPublishParticipator} = require('../Models/participatorModel')
 
 sequelize.authenticate()
   .then(async () => {
@@ -29,6 +30,8 @@ sequelize.authenticate()
     User.hasOne(Driver,{foreignKey: {name: 'user_id',allowNull: false}, onDelete: 'CASCADE'})
     // Driver.belongsTo(User, {foreignKey: {name: 'user_id',allowNull: false}, onDelete: 'CASCADE'})
 
+    driverPublish.hasMany(driverPublishParticipator, {foreignKey:{name: 'driverpublish_id',allowNull: false},onDelete: 'CASCADE'})
+    User.hasMany(driverPublishParticipator,{foreignKey: {name: 'user_id',allowNull: false}, onDelete: 'CASCADE'})
     sequelize.sync({
       // force: true
       // force: false
@@ -48,5 +51,6 @@ sequelize.authenticate()
     BBS,
     bbsComment,
     bbsLike,
-    Driver
+    Driver,
+    driverPublishParticipator
   }

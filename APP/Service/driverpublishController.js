@@ -1,4 +1,4 @@
-const { User, driverPublish} = require('../Models/db')
+const { User, driverPublish , driverPublishParticipator} = require('../Models/db')
 const { response } = require('./response')
 
 class driverPublishController {
@@ -86,10 +86,7 @@ class driverPublishController {
          * 根据出发时间排序
          */
         queryResult = await driverPublish.findAndCountAll({
-          include: [{
-            model: User,
-            attributes: ['openid']
-          }],
+          distinct: true,
           order: [
             [sortBy, 'DESC']
           ],
@@ -102,10 +99,6 @@ class driverPublishController {
          * 不根据出发时间排序
          */
         queryResult = await driverPublish.findAndCountAll({
-          include: [{
-            model: User,
-            attributes: ['openid']
-          }],
           order: [
             ['created_at', 'DESC']
           ],
@@ -156,7 +149,7 @@ class driverPublishController {
                 {
                     foreignKey: 'user_id',
                 }),
-            attributes: ['avatar_url', 'nick_name'],
+            attributes: ['avatar_url', 'nick_name' , 'openid'],
         }]
       })
       // ctx.body = {
@@ -211,6 +204,21 @@ class driverPublishController {
     let {start,end,surplusSeat,price,time,date,phone,note} = ctx.request.body.formData
     let updated_at = 
     console.log(ctx.req)
+  }
+
+  static async add_driverPublish_participator(ctx) {
+    let ret_data = {}
+    let {user_id, driverpublish_id} = ctx.request.body.participator
+    try {
+      let participator = await driverPublishParticipator.create({
+        user_id,
+        driverpublish_id
+      })
+      ret_data['participator'] = participator
+      response(ctx, ret_data ,201)
+    } catch (error) {
+      response(ctx, ret_data , 400)
+    }
   }
 }
 
