@@ -15,6 +15,10 @@ router.get('/', async(ctx) =>{
   await bbsController.get_all_bbs(ctx)
 })
 
+// 模糊搜索
+router.get('/search',async(ctx) =>{
+  await bbsController.search_bbs(ctx)
+})
 
 // 评论相关
 
@@ -26,4 +30,11 @@ router.post('/addcomment', async (ctx) =>{
 router.get('/getcomment/:bbs_id', async(ctx)=>{
   await bbsController.get_bbs_comment_by_bbsID(ctx)
 })
+
+// 评论点赞
+router.post('/')
+
+
+
+
 module.exports = router

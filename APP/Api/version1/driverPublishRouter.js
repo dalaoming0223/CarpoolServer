@@ -7,14 +7,12 @@ const router = new Router({
     prefix: '/v1/driverPublish'
 })
 
-
 router.post('/add',async (ctx, next) => {
 
   await driverPublishController.add_driverPublish(ctx, next)
   // handleResult('添加成功')
   
 })
-
 router.get('/:userid', async(ctx) => {
   await driverPublishController.get_driverPublish_by_user_id(ctx)
 })

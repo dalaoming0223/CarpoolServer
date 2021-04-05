@@ -1,11 +1,9 @@
 /**
  * 异常的捕获
  */
-
 const {
   HttpException
 } = require('../Core/httpException')
-
 
 const catchError = async (ctx, next) => {
   try {
@@ -14,8 +12,8 @@ const catchError = async (ctx, next) => {
 
 
     const isDev = global.config.environment  === 'dev'
-    const isHttpException = error instanceof HttpException //是否是已知异常
-    
+    //是否是已知异常
+    const isHttpException = error instanceof HttpException    
     //开发环境下
     if (isDev && !isHttpException) {
       throw error
@@ -45,5 +43,4 @@ const catchError = async (ctx, next) => {
 
   }
 }
-
 module.exports = catchError

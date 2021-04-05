@@ -5,9 +5,9 @@ class EntryManager {
   static initCore(app) {
     // 入口方法
     EntryManager.app = app;
-    EntryManager.initLoadRouters()
-    EntryManager.loadHttpException()
-    EntryManager.loadConfig()
+    EntryManager.initLoadRouters()    // 中间件  路由动态加载
+    EntryManager.loadHttpException()  // 中间件  http异常处理
+    EntryManager.loadConfig()         // 中间件  动态加载配置文件
   }
 
   // 加载全部路由

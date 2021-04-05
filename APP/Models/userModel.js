@@ -47,7 +47,8 @@ class User extends Model {
     const user = await User.create({
       openid: userData.openid,
       avatarUrl: user_info.avatar_url,
-      nickName: user_info.nick_name
+      nickName: user_info.nick_name,
+      gender: user_info.gender
     })
     return user
   }
@@ -85,6 +86,7 @@ User.init({
     unique: true // 是否唯一
   },
   avatarUrl: Sequelize.STRING,
+  gender: Sequelize.INTEGER,
   nickName: Sequelize.STRING
 }, {
   sequelize,

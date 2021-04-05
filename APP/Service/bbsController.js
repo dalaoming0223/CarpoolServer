@@ -8,7 +8,8 @@ const {
 const {
   response
 } = require('./response')
-
+const Sequelize = require('sequelize')
+const Op = Sequelize.Op
 class bbsController {
 
   static async add_bbs_by_userid(ctx) {
@@ -39,7 +40,7 @@ class bbsController {
     let queryResult = null
     let currentPage = parseInt(ctx.request.query.page) || 1
     let sortBy = 'created_at'
-    let countPerPage = 10
+    let countPerPage = 5
     let pageCount = 0
 
     try {
@@ -136,10 +137,47 @@ class bbsController {
       }
     } catch (error) {
       console.log(error)
-      response(ctx, ret_data,400)
+      response(ctx, ret_data, 401)
     }
   }
-  //添加评论
+  
+  // 搜索
+
+  static async search_bbs(ctx) {
+    let ret_data = {}
+    let lookingfor = ctx.request.query.lookingfor
+    let queryResult = null
+    try {
+      queryResult = await BBS.findAndCountAll({
+        where : {
+          [Op.or]: [
+            {
+              content: {
+                [Op.like]: ['%'+lookingfor+'%']
+              }
+            },
+            // {
+            //   end_address: {
+            //     [Op.like]: [lookingfor]
+            //   }
+            // }
+          ]
+        },
+        distinct: true,
+        include: [{
+          association: BBS.belongsTo(User, {
+            foreignKey: 'user_id'
+          }),
+          attributes: ['avatar_url', 'nick_name']
+        }]
+      })
+      ret_data['queryResult'] = queryResult
+      response(ctx, ret_data, 200)
+    } catch (error) {
+      console.log(error)
+      response(ctx, ret_data , 400)
+    }
+  }
 }
 
 module.exports = {

@@ -7,13 +7,8 @@ const koa2cors = require('koa2-cors')
 
 const app = new Koa()
 
-app.use(catchError)
+app.use(catchError)  
 app.use(Bodyparser())
-// app.use(async ctx => {
-//   // the parsed body will store in ctx.request.body
-//   // if nothing was parsed, body will be an empty object {}
-//   ctx.body = ctx.request.body;
-// });
 app.use(koa2cors())
 EntryManager.initCore(app)
 

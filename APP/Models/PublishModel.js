@@ -18,7 +18,7 @@ const PublicAttribute = {
   phone: {type: Sequelize.STRING(64)},
   price: {type: Sequelize.STRING(10)},
   personNum: {type: Sequelize.STRING(10)},
-  start_time: {type: Sequelize.STRING(32)},
+  start_time: {type: Sequelize.DATE},
   note: {type: Sequelize.STRING(10)},
   start_name: {type: Sequelize.STRING(64)},
   start_address: {type: Sequelize.STRING(64)},//下面几个属性的整合体
@@ -40,7 +40,8 @@ const PublicAttribute = {
   end_province: {type: Sequelize.STRING(64)},
   end_street: {type: Sequelize.STRING(64)},
   end_streetnumber: {type: Sequelize.STRING(64)},
-  status: {type: Sequelize.STRING(64)}
+  status: {type: Sequelize.STRING(64)},
+  finish_status : {type: Sequelize.INTEGER}
 }
 
 

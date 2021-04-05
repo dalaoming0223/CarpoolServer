@@ -1,7 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="84e1d53f-b183-4c9e-b615-c06649e465e4" name="Default Changelist" comment="" />
+    <list default="true" id="84e1d53f-b183-4c9e-b615-c06649e465e4" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/APP/Api/version1/bbsRouter.js" beforeDir="false" afterPath="$PROJECT_DIR$/APP/Api/version1/bbsRouter.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/APP/Api/version1/driverPublishRouter.js" beforeDir="false" afterPath="$PROJECT_DIR$/APP/Api/version1/driverPublishRouter.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/APP/Models/PublishModel.js" beforeDir="false" afterPath="$PROJECT_DIR$/APP/Models/PublishModel.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/APP/Models/db.js" beforeDir="false" afterPath="$PROJECT_DIR$/APP/Models/db.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/APP/Models/participatorModel.js" beforeDir="false" afterPath="$PROJECT_DIR$/APP/Models/participatorModel.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/APP/Service/bbsController.js" beforeDir="false" afterPath="$PROJECT_DIR$/APP/Service/bbsController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/APP/Service/driverpublishController.js" beforeDir="false" afterPath="$PROJECT_DIR$/APP/Service/driverpublishController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/entryManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/Core/entryManager.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -59,6 +72,7 @@
       <workItem from="1608107091961" duration="1966000" />
       <workItem from="1608884198186" duration="804000" />
       <workItem from="1609865447529" duration="3000" />
+      <workItem from="1617414387802" duration="1206000" />
     </task>
     <servers />
   </component>

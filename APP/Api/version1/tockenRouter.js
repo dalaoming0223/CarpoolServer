@@ -11,7 +11,6 @@ const router = new Router({
   prefix: '/v1/token'
 })
 
-
 // 此路由用于生成token
 router.post('/', async (ctx, next) => {
   const tokenParams = await new TokenValidator().validate(ctx)
@@ -27,22 +26,14 @@ router.post('/', async (ctx, next) => {
     avatar_url,
     nick_name
   }
-
-  // console.log(user_info)
-  // console.log('能走到这里吗')
   let token 
-
   switch (type) {
     case LoginType.USER_EMAIL:
       token = await emailLogin(account, secret)
       break;
     
     case LoginType.USER_MINI_PROGRAM:
-      // code
-      // console.log('打印从wechat端传过来的code：',code)
-      // token,openid = await WeChatController.codeToToken(code)
       arr = await WeChatController.codeToToken(code,user_info)
-      // console.log(arr)
       break;
     
     case LoginType.ADMIN_EMAIL:
