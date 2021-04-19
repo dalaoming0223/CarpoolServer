@@ -32,8 +32,19 @@ router.get('/getcomment/:bbs_id', async(ctx)=>{
 })
 
 // 评论点赞
-router.post('/')
+router.post('/like', async(ctx)=> {
+  await bbsController.like(ctx)
+})
 
+// 取消评论点赞
+router.post('/dislike', async(ctx)=> {
+  await bbsController.dislike(ctx)
+})
+
+// 管理相关
+router.post('/changestatus/:bbs_id', async(ctx)=> {
+  await bbsController.change_bbs_status(ctx)
+})
 
 
 

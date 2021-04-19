@@ -13,6 +13,7 @@ const router = new Router({
 
 // 此路由用于生成token
 router.post('/', async (ctx, next) => {
+  console.log('生成token')
   const tokenParams = await new TokenValidator().validate(ctx)
   // handleResult('TOKEN 生成成功')
   const type = tokenParams.get('body.type')

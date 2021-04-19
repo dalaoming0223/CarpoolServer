@@ -40,7 +40,7 @@ class bbsController {
     let queryResult = null
     let currentPage = parseInt(ctx.request.query.page) || 1
     let sortBy = 'created_at'
-    let countPerPage = 5
+    let countPerPage = parseInt(ctx.request.query.limit) || 5
     let pageCount = 0
 
     try {
@@ -69,7 +69,7 @@ class bbsController {
       ret_data['page'] = currentPage
       ret_data['pageCount'] = pageCount
       // console.log("queryResult",queryResult.rows)
-      response(ctx, ret_data, 200, 0)
+      response(ctx, ret_data, 20000)
 
     } catch (error) {
 
@@ -141,6 +141,67 @@ class bbsController {
     }
   }
   
+  // 喜欢
+  static async like(ctx) {
+    console.log('我要点赞了')
+    let ret_data = {}
+    let {bbs_id, user_id} = ctx.request.body
+    try {
+      const bbslike = await bbsLike.findOne({
+        where: {
+          bbs_id,
+          user_id
+        }
+      })
+      if(bbslike){
+        console.log('此人点赞已存在')
+      }else{
+        await bbsLike.create({
+          bbs_id,
+          user_id
+        })
+
+        const bbs = await BBS.getData(bbs_id, user_id, false)
+        await bbs.increment('like_count', {by: 1})
+        ret_data['msg'] = '点赞成功'
+      }
+      response(ctx, ret_data, 200)
+    } catch (error) {
+      console.log(error)
+      response(ctx, ret_data, 401)
+    }
+  }
+
+  // 不喜欢
+  static async dislike(ctx) {
+    console.log('我要取消点赞了')
+    let ret_data = {}
+    let {bbs_id, user_id} = ctx.request.body
+    try {
+      const bbslike = await bbsLike.findOne({
+        where: {
+          bbs_id,
+          user_id
+        }
+      })
+      if(!bbslike){
+        console.log('此人没有点赞过')
+      }else{
+        await bbslike.destroy({
+          force: false
+        })
+
+        const bbs = await BBS.getData(bbs_id, user_id, false)
+        await bbs.decrement('like_count', {by: 1})
+        ret_data['msg'] = '取消点赞成功'
+      }
+      response(ctx, ret_data, 200)
+    } catch (error) {
+      console.log(error)
+      response(ctx, ret_data, 401)
+    }
+  }
+  
   // 搜索
 
   static async search_bbs(ctx) {
@@ -176,6 +237,32 @@ class bbsController {
     } catch (error) {
       console.log(error)
       response(ctx, ret_data , 400)
+    }
+  }
+
+  // 管理页面相关 改变bbs状态  记得返回20000码
+  static async change_bbs_status(ctx) {
+    let ret_data = {}
+    let bbs_id = ctx.request.params.bbs_id
+    let status = ctx.request.body.status
+    let queryResult = {}
+    // console.log('bbs_id:', bbs_id)
+    // console.log('status:', status)
+    try {
+      queryResult = await BBS.update(
+        {status},
+        {where: {
+          bbs_id
+        }}
+      )
+      // console.log(queryResult)
+      ret_data['queryResult'] = queryResult
+      ret_data['message'] = '更新成功'
+      response(ctx, ret_data, 20000)
+    } catch (error) {
+      // ret_data['queryResult'] = ''
+      ret_data['message'] = '更新失败'
+      response(ctx, ret_data, 40001)
     }
   }
 }

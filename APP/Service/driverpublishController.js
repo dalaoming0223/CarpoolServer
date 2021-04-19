@@ -186,10 +186,6 @@ class driverPublishController {
           [sortBy, 'DESC']
         ],
         distinct: true,
-        // include: [{
-        //   model: User
-        // }]
-
         include: [{
           association: driverPublish.belongsTo(User, {
             foreignKey: 'user_id',
