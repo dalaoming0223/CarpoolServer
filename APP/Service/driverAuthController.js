@@ -1,5 +1,8 @@
 const { response } = require('./response')
 const { Driver,User } = require('../Models/db')
+const getAccessToken = require('./get_access_token.js')
+const Sequelize = require('sequelize')
+const Op = Sequelize.Op
 const download = require('./get_wx_storage')
 
 
@@ -19,6 +22,13 @@ class driverAuthController {
       // console.log(user)
 
       if(!user){
+        let driver_license_http_location = await this.update_img_http_location(fileIds)
+        // console.log('driver_license_http_location:',driver_license_http_location)
+        let arr = []
+        for (let i of driver_license_http_location) {
+          arr.push(i.download_url)
+        }
+        let driver_license_http = arr.join(',')
         let driver = await Driver.create({
             user_id,
             status: 2,
@@ -26,6 +36,7 @@ class driverAuthController {
             plate_number: carnum,
             phone_number: phone,
             driver_license: fileIds,
+            driver_license_http,
             car_type: cartype,
             id_card: idnum
 
@@ -71,6 +82,7 @@ class driverAuthController {
   static async get_all_driver(ctx) {
     let ret_data = {}
     let queryResult = null
+    let driver_name = ctx.request.query.driver_name
     let currentPage = parseInt(ctx.request.query.page) || 1
     let countPerPage = parseInt(ctx.request.query.limit) || 5
     try {
@@ -78,17 +90,42 @@ class driverAuthController {
       if (currentPage <= 0) {
         currentPage = 1
       }
-      let driver = await Driver.findAndCountAll({
-        limit: countPerPage,
-        offset: countPerPage * (currentPage - 1),
-        distinct: true,
-        include: [{
-          association: Driver.belongsTo(User, {
-            foreignKey: 'user_id',
-          }),
-          attributes: ['avatar_url', 'nick_name', 'openid'],
-        }]
-      })
+      let driver
+      if (!driver_name){
+        driver = await Driver.findAndCountAll({
+          where : {
+            [Op.or]: [
+              {
+                driver_name: {
+                  [Op.like]: ['%'+driver_name+'%']
+                }
+              },
+            ]
+          },
+          limit: countPerPage,
+          offset: countPerPage * (currentPage - 1),
+          distinct: true,
+          include: [{
+            association: Driver.belongsTo(User, {
+              foreignKey: 'user_id',
+            }),
+            attributes: ['avatar_url', 'nick_name', 'openid'],
+          }]
+        })
+      }else{
+        driver = await Driver.findAndCountAll({
+          limit: countPerPage,
+          offset: countPerPage * (currentPage - 1),
+          distinct: true,
+          include: [{
+            association: Driver.belongsTo(User, {
+              foreignKey: 'user_id',
+            }),
+            attributes: ['avatar_url', 'nick_name', 'openid'],
+          }]
+        })
+      }
+
 
       if(driver){
         ret_data['driver_list'] = driver       
@@ -108,7 +145,7 @@ class driverAuthController {
     let queryResult = {}
     try {
       queryResult = await Driver.update(
-        {status},
+        {status},// 
         {where: {
           driver_id
         }}
@@ -123,10 +160,9 @@ class driverAuthController {
   }
 
   // 添加/查看 云开发图片的https地址
-  static async update_img_http_location(driver_id, ctx) {  
-    const str = 'cloud://carapp-ytfl0.6361-carapp-ytfl0-1300584294/STUcarpool/driverAuth1617672409072-507680.45340068644.png,cloud://carapp-ytfl0.6361-carapp-ytfl0-1300584294/STUcarpool/driverAuth1617672409087-603394.4890369846.jpeg'
-    const file_id_list = str.split(',')
-    // console.log(file_id_list)
+  static async update_img_http_location(fileStr) {  
+    await getAccessToken()
+    const file_id_list = fileStr.split(',')
     let file_list = []
     for (let i of file_id_list){
       let obj = {
@@ -136,8 +172,9 @@ class driverAuthController {
       file_list.push(obj)
     }
     // console.log(file_list)
-    let res_img = await download(ctx, file_list)
-    console.log(res_img)
+    let res_img = await download(file_list)
+    // console.log(res_img)
+    return res_img.file_list
   }
 }
 

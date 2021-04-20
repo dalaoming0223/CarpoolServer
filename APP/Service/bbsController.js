@@ -10,6 +10,8 @@ const {
 } = require('./response')
 const Sequelize = require('sequelize')
 const Op = Sequelize.Op
+
+
 class bbsController {
 
   static async add_bbs_by_userid(ctx) {
@@ -57,11 +59,17 @@ class bbsController {
         ],
         distinct: true,
         include: [{
+          // model: bbsLike,
           association: BBS.belongsTo(User, {
             foreignKey: 'user_id'
           }),
           attributes: ['avatar_url', 'nick_name']
-        }]
+        },
+        {
+          model: bbsLike,
+          attributes: ['user_id']
+        }
+      ]
       })
       pageCount = Math.ceil(queryResult.count / countPerPage)
       ret_data['data'] = queryResult.rows
@@ -143,7 +151,6 @@ class bbsController {
   
   // 喜欢
   static async like(ctx) {
-    console.log('我要点赞了')
     let ret_data = {}
     let {bbs_id, user_id} = ctx.request.body
     try {
@@ -155,13 +162,14 @@ class bbsController {
       })
       if(bbslike){
         console.log('此人点赞已存在')
+        ret_data['msg'] = '此人点赞存在 进行点赞失败'
       }else{
         await bbsLike.create({
           bbs_id,
           user_id
         })
-
-        const bbs = await BBS.getData(bbs_id, user_id, false)
+        const bbs = await this.getData(bbs_id, false)
+        // console.log('bbs:',bbs)
         await bbs.increment('like_count', {by: 1})
         ret_data['msg'] = '点赞成功'
       }
@@ -174,7 +182,6 @@ class bbsController {
 
   // 不喜欢
   static async dislike(ctx) {
-    console.log('我要取消点赞了')
     let ret_data = {}
     let {bbs_id, user_id} = ctx.request.body
     try {
@@ -186,22 +193,38 @@ class bbsController {
       })
       if(!bbslike){
         console.log('此人没有点赞过')
+        ret_data['msg'] = '此人点赞不存在 无法进行取消点赞'
       }else{
         await bbslike.destroy({
           force: false
         })
 
-        const bbs = await BBS.getData(bbs_id, user_id, false)
+        const bbs = await this.getData(bbs_id, false)
+        console.log('bbs:',bbs)
         await bbs.decrement('like_count', {by: 1})
         ret_data['msg'] = '取消点赞成功'
       }
       response(ctx, ret_data, 200)
     } catch (error) {
       console.log(error)
-      response(ctx, ret_data, 401)
+      response(ctx, ret_data, 400)
     }
   }
   
+  // 点赞
+  static async getData(bbs_id, useScope = true) {
+    let bbs = null;
+    const finder = {
+        where: {
+            bbs_id: bbs_id
+        }
+    };
+
+    const scope = useScope ? 'bh' : null;
+    bbs = BBS.scope(scope).findOne(finder);
+
+    return bbs;
+  }
   // 搜索
 
   static async search_bbs(ctx) {

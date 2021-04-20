@@ -339,13 +339,6 @@ class driverPublishController {
           id: participator_id
         }
       })
-      // console.log(result)
-      // ret_data['data'] = result
-      // ret_data['statusCode'] = 200
-      // console.log(result[0])
-      // console.log(ret_data)
-      // console.log('执行到这里。。'
-      // response(ctx, ret_data, 200, 1)
       if (result[0] === 1)
         response(ctx, ret_data, 200, 1)
       else if (result[0] === 0)

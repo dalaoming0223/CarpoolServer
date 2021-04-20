@@ -19,8 +19,14 @@ router.get('/getalluser', async(ctx) => {
 })
 
 router.post('/updateimg', async(ctx) => {
-  console.log('访问这个！')
+  console.log('获取img https链接')
   await driverAuthController.update_img_http_location(ctx)
+})
+
+// 管理相关
+router.post('/changestatus/:driver_id', async(ctx)=> {
+  console.log('改变司机status')
+  await driverAuthController.change_driver_status(ctx)
 })
 
 

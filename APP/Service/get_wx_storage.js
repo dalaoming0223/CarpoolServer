@@ -3,7 +3,7 @@ const rp = require('request-promise')
 const fs = require('fs') // node文件模块
 
 
-async function download(ctx, fileList) {
+async function download(fileList) {
   const ACCESS_TOKEN = await getAccessToken()
   const options = {
     method: 'POST',
