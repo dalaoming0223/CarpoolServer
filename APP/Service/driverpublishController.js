@@ -1,7 +1,8 @@
 const {
   User,
   driverPublish,
-  driverPublishParticipator
+  driverPublishParticipator,
+  Driver
 } = require('../Models/db')
 const {
   response
@@ -369,11 +370,16 @@ class driverPublishController {
           }),
           // attributes: ['avatar_url', 'nick_name', 'openid'],
           include: [{
-            association: driverPublish.belongsTo(User, {
-              foreignKey: 'user_id',
-            }),
-            attributes: ['avatar_url', 'nick_name', 'openid'],
-          }]
+              association: driverPublish.belongsTo(User, {
+                foreignKey: 'user_id',
+              }),
+              attributes: ['avatar_url', 'nick_name', 'openid'],
+              include: [{
+                model: Driver
+              }]
+            },
+
+          ]
         }]
       })
       ret_data['queryResult'] = queryResult
@@ -388,12 +394,12 @@ class driverPublishController {
     let ret_data = {}
     let userid = ctx.request.params.userid
     let queryResult = null
-    
+
     var formatNumber = function (n) {
       n = n.toString()
       return n[1] ? n : '0' + n
     }
-    
+
     var formatTime = function (date1, format) {
       var date = new Date(date1)
       var formateArr = ['Y', 'M', 'D', 'h', 'm', 's'];
@@ -401,7 +407,7 @@ class driverPublishController {
       returnArr.push(date.getFullYear());
       returnArr.push(formatNumber(date.getMonth() + 1));
       returnArr.push(formatNumber(date.getDate()));
-    
+
       returnArr.push(formatNumber(date.getHours()));
       returnArr.push(formatNumber(date.getMinutes()));
       returnArr.push(formatNumber(date.getSeconds()));
@@ -411,14 +417,14 @@ class driverPublishController {
       }
       return format;
     }
-    
-    
+
+
     // let recent_time = formatTime(new Date(new Date(new Date().setDate(new Date().getDate() -1)).setHours(0,0,0,0)), "Y-M-D h:m:s")
-    let time = new Date(new Date(new Date().setDate(new Date().getDate())).setHours(0,0,0,0))
+    let time = new Date(new Date(new Date().setDate(new Date().getDate() + 2)).setHours(0, 0, 0, 0))
     // console.log(userid)
     console.log(time)
     try {
-      queryResult = await driverPublishParticipator.findAndCountAll({
+      queryResult = await driverPublishParticipator.findOne({
         where: {
           user_id: userid
         },
@@ -428,9 +434,9 @@ class driverPublishController {
           }),
           where: {
             start_time: {
-              [Op.gte]: [time]
+              [Op.gte]: time
             },
-            finish_status: 1
+            finish_status: 1 // 1为订单仍然进行中
           },
           // attributes: ['avatar_url', 'nick_name', 'openid'],
           include: [{
@@ -455,7 +461,7 @@ class driverPublishController {
     let participatorid = ctx.request.params.participatorid
     let score = ctx.request.body.score
     let queryResult = null
-    // console.log(participatorid, score)
+    console.log(participatorid, score)
     try {
       queryResult = await driverPublishParticipator.update({
         score: score
@@ -466,11 +472,59 @@ class driverPublishController {
       })
       ret_data['result'] = queryResult
       ret_data['msg'] = '更新成功'
+      console.log(queryResult)
+      ctx.body = {
+        "msg": '也要笑死了'
+      }
+      // response(ctx, ret_data, 200, 1)
+    } catch (error) {
+      console.log(error)
+      ret_data['msg'] = '更新失败'
+      response(ctx, ret_data, 400)
+    }
+  }
+
+  static async get_by_participator_id(ctx) {
+    let ret_data = {}
+    let participator_id = ctx.request.params.participator_id
+    let queryResult = {}
+    // console.log(participator_id)
+    try {
+      queryResult = await driverPublishParticipator.findOne({
+        where: {
+          id: participator_id
+        },
+        // raw: true,
+        distinct: true,
+        include: [{
+          association: driverPublishParticipator.belongsTo(User, {
+            foreignKey: 'user_id',
+          }),
+          // attributes: ['avatar_url', 'nick_name', 'openid'],
+        }, {
+          association: driverPublishParticipator.belongsTo(driverPublish, {
+            foreignKey: 'driverpublish_id',
+          }),
+          include: [{
+            association: driverPublish.belongsTo(User, {
+              foreignKey: 'user_id',
+            }),
+            attributes: ['avatar_url', 'nick_name', 'openid'],
+            include: [{
+              model: Driver
+            }]
+          },
+
+        ]
+        }]
+      })
       // console.log(queryResult)
+      ret_data.participator_list = queryResult
+      // console.log(ret_data)
       response(ctx, ret_data, 200)
     } catch (error) {
       console.log(error)
-      response(ctx, ret_data ,400)
+      response(ctx, ret_data, 400)
     }
   }
 
@@ -480,26 +534,25 @@ class driverPublishController {
     let queryResult = null
     try {
       queryResult = await driverPublish.findAndCountAll({
-        where : {
-          [Op.or]: [
-            {
+        where: {
+          [Op.or]: [{
               start_address: {
-                [Op.like]: ['%'+lookingfor+'%']
+                [Op.like]: ['%' + lookingfor + '%']
               }
             },
             {
               end_address: {
-                [Op.like]: ['%'+lookingfor+'%']
+                [Op.like]: ['%' + lookingfor + '%']
               }
             },
             {
               end_name: {
-                [Op.like]: ['%'+lookingfor+'%']
+                [Op.like]: ['%' + lookingfor + '%']
               }
             },
             {
               start_name: {
-                [Op.like]: ['%'+lookingfor+'%']
+                [Op.like]: ['%' + lookingfor + '%']
               }
             }
 
@@ -517,7 +570,7 @@ class driverPublishController {
       response(ctx, ret_data, 200)
     } catch (error) {
       console.log(error)
-      response(ctx, ret_data , 400)
+      response(ctx, ret_data, 400)
     }
   }
 }

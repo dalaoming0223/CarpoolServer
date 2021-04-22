@@ -17,22 +17,29 @@ router.get('/search/user/:userid',async (ctx) => {
 })
 
 router.get('/searchrecent/user/:userid',async (ctx) => {
+  console.log('获取最近日程')
   await driverPublishController.get_recently_driverPublish_by_participator(ctx)
 })
 
 router.put('/updateParticipator', async(ctx) => {
   // console.log('执行更新路由')
-  driverPublishController.update_driverPublish_participator_join_status(ctx)
+  await driverPublishController.update_driverPublish_participator_join_status(ctx)
 })
 
 
 // 评分
-router.post('/grade/part/:participatorid', async(ctx) => {
-  // console.log('执行更新路由')
-  driverPublishController.grade_by_participator(ctx)
+router.put('/grade/part/:participatorid', async(ctx) => {
+  console.log('执行评分')
+  await driverPublishController.grade_by_participator(ctx)
 })
 
-router.get('/search/driverpublish', async (ctx)=> {
+// 根据participatorid查询数据
+router.get('/search/participator/:participator_id', async(ctx) => {
+  // console.log('执行查询')
+  await driverPublishController.get_by_participator_id(ctx)
+})
+
+router.get('/search/driverpublish', async(ctx)=> {
   // console.log('模糊搜索')
   await driverPublishController.search_driver_publish(ctx)
 })
