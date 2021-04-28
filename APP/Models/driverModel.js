@@ -11,7 +11,7 @@ const driverAttribute = {
   status: { type: Sequelize.INTEGER}, // 解释状态是否合法   1: 合法 0： 不合法  2: 审核中
   // plate_number: {type: Sequelize.INTEGER}, //车牌号码
   plate_number :{type: Sequelize.STRING}, // 粤** 京**
-  phone_number: {type: Sequelize.STRING},
+  phone_number: {type: Sequelize.STRING}, // 电话号码
   driver_name: {type: Sequelize.STRING},
   driver_license: {type: Sequelize.STRING}, //驾驶证照片 云存储地址
   driver_license_http: {type: Sequelize.STRING}, //驾驶证照片 http地址

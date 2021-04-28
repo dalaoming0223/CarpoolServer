@@ -1,7 +1,7 @@
 const util = require('util')
 const axios = require('axios')
 
-const { User } = require('../Models/db')
+const { User, Driver } = require('../Models/db')
 const { generateToken } = require('../../Core/generateToken')
 const { Auth } = require('../../Middlewares/auth')
 /**
@@ -30,14 +30,23 @@ class WeChatController {
     }
 
     // 判断数据库是否存在微信用户 opendid
-    let user = await User.getUserByOpenID(result.data.openid)
+    // let user = await User.getUserByOpenID(result.data.openid)
+    let user = await User.findOne({
+      where: {
+        openid: result.data.openid
+      },
+      include: {
+        model: Driver
+      }
+    })
+    console.log('登陆中打印user：',user)
 
     // 如果不存在，就创建一个微信小程序用户
     if (!user) {
       user = await User.createUserByOpenID(result.data, user_info)
     }
 
-    return [generateToken(user.id, Auth.NORMAL_USER), result.data.openid , user.id]
+    return [generateToken(user.id, Auth.NORMAL_USER), result.data.openid , user.id, user]
   }
 
 }

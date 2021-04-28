@@ -22,10 +22,12 @@ router.post('/', async (ctx, next) => {
   const code = tokenParams.get('body.code')   //  微信用户登录code
   const avatar_url = tokenParams.get('body.avatar_url')
   const nick_name = tokenParams.get('body.nick_name')
+  const gender = tokenParams.get('body.gender')
 
   const user_info = {
     avatar_url,
-    nick_name
+    nick_name,
+    gender
   }
   let token 
   switch (type) {
@@ -48,7 +50,8 @@ router.post('/', async (ctx, next) => {
   ctx.body = {
     token: arr[0],
     openid: arr[1],
-    userid: arr[2]
+    userid: arr[2],
+    allUserInfo : arr[3]
   }
 })
 

@@ -11,7 +11,8 @@ const BBSAttribute = {
   status: { type: Sequelize.INTEGER}, // 解释状态是否合法
   content: { type: Sequelize.TEXT},
   like_count : {type: Sequelize.INTEGER,allowNull: false, defaultValue: 0},
-  comment_count : {type: Sequelize.INTEGER,allowNull: false, defaultValue: 0}
+  comment_count : {type: Sequelize.INTEGER,allowNull: false, defaultValue: 0},
+  view_count : {type: Sequelize.INTEGER,allowNull: false, defaultValue: 0},
 }
 
 

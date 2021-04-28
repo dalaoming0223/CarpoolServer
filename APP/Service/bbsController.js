@@ -2,7 +2,8 @@ const {
   User,
   BBS,
   bbsComment,
-  bbsLike
+  bbsLike,
+  bbsView
 } = require('../Models/db')
 
 const {
@@ -225,8 +226,38 @@ class bbsController {
 
     return bbs;
   }
-  // 搜索
+  
+  // 浏览数
+  static async add_bbs_view_count(ctx){
+    let ret_data = {}
+    let {bbs_id, user_id} = ctx.request.body
+    try {
+      const bbsview = await bbsView.findOne({
+        where: {
+          bbs_id,
+          user_id
+        }
+      })
+      if(bbsview){
+        ret_data['msg'] = '此人已在该观看列表中'
+      }else{
+        await bbsView.create({
+          bbs_id,
+          user_id
+        })
+        const bbs = await this.getData(bbs_id, false)
+        // console.log('bbs:',bbs)
+        await bbs.increment('view_count', {by: 1})
+        ret_data['msg'] = 'BBS view 数＋1'
+      }
+      response(ctx, ret_data, 200)
+    } catch (error) {
+      console.log(error)
+      response(ctx, ret_data, 401)
+    }
+  }
 
+  // 搜索
   static async search_bbs(ctx) {
     let ret_data = {}
     let lookingfor = ctx.request.query.lookingfor

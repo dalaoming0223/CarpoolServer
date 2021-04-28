@@ -41,6 +41,11 @@ router.post('/dislike', async(ctx)=> {
   await bbsController.dislike(ctx)
 })
 
+// 浏览数
+router.post('/addviewcount', async(ctx) => {
+  await bbsController.add_bbs_view_count(ctx)
+})
+
 // 管理相关
 router.post('/changestatus/:bbs_id', async(ctx)=> {
   await bbsController.change_bbs_status(ctx)
