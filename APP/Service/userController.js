@@ -1,3 +1,6 @@
+const util = require('util')
+const axios = require('axios')
+
 const { 
   User,
   contactPeople
@@ -8,11 +11,33 @@ const {
 } = require('./response')
 
 const Sequelize = require('sequelize')
-const { where } = require('sequelize')
 const Op = Sequelize.Op
 
 class userController {
+  static async login2(ctx) {
+    let ret_data = {}
+    let {code} = ctx.request.body
+    // 格式化url  替换掉 %s 
+    const url = util.format(
+      global.config.wx.loginUrl,
+      global.config.wx.appId,
+      global.config.wx.appSecret,
+      code)
+
+    try {
+      const result = await axios.get(url)
+      // console.log('result', result)
+      ret_data['result'] = result.data
+      response(ctx, ret_data, 200)
+    } catch (error) {
+      response(ctx, ret_data, 400)
+    }
+  }
   
+  static async decodePhoneNum(ctx) {
+    let ret_data = {}
+  }
+
   static async add_contact_people(ctx) {
     let ret_data = {}
     let {
@@ -86,6 +111,23 @@ class userController {
 
   static async delete_contact_people(ctx) {
     let ret_data = {}
+    let {id} = ctx.request.body
+    let queryResult = null
+    try {
+      queryResult = await contactPeople.destroy({
+        where:
+        {
+          id
+        }
+      })
+      console.log(queryResult)
+      ret_data['contact_people'] = queryResult
+      response(ctx, ret_data, 200, -1)
+    } catch (error) {
+      console.log(error)
+      ret_data['error_msg'] = error
+      response(ctx, ret_data, 400)
+    }
   }
 }
 

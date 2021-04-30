@@ -36,5 +36,9 @@ router.delete('/deletecontactpeople', async(ctx) => {
   await userController.delete_contact_people(ctx)
 })
 
+// 新版手机登陆
+router.post('/login2', async(ctx) => {
+  await userController.login2(ctx)
+})
 
 module.exports = router
