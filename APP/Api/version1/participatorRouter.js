@@ -21,6 +21,7 @@ router.get('/searchrecent/user/:userid',async (ctx) => {
   await driverPublishController.get_recently_driverPublish_by_participator(ctx)
 })
 
+
 router.put('/updateParticipator', async(ctx) => {
   // console.log('执行更新路由')
   await driverPublishController.update_driverPublish_participator_join_status(ctx)

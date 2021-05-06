@@ -2,16 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="84e1d53f-b183-4c9e-b615-c06649e465e4" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/APP/Api/version1/bbsRouter.js" beforeDir="false" afterPath="$PROJECT_DIR$/APP/Api/version1/bbsRouter.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/APP/Api/version1/driverAuthRouter.js" beforeDir="false" afterPath="$PROJECT_DIR$/APP/Api/version1/driverAuthRouter.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/APP/Api/version1/tockenRouter.js" beforeDir="false" afterPath="$PROJECT_DIR$/APP/Api/version1/tockenRouter.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/APP/Models/driverModel.js" beforeDir="false" afterPath="$PROJECT_DIR$/APP/Models/driverModel.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/APP/Service/bbsController.js" beforeDir="false" afterPath="$PROJECT_DIR$/APP/Service/bbsController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/APP/Service/driverAuthController.js" beforeDir="false" afterPath="$PROJECT_DIR$/APP/Service/driverAuthController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/APP/Api/version1/driverPublishRouter.js" beforeDir="false" afterPath="$PROJECT_DIR$/APP/Api/version1/driverPublishRouter.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/APP/Api/version1/participatorRouter.js" beforeDir="false" afterPath="$PROJECT_DIR$/APP/Api/version1/participatorRouter.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/APP/Api/version1/passengerPublishRouter.js" beforeDir="false" afterPath="$PROJECT_DIR$/APP/Api/version1/passengerPublishRouter.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/APP/Models/db.js" beforeDir="false" afterPath="$PROJECT_DIR$/APP/Models/db.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/APP/Service/access_token.json" beforeDir="false" afterPath="$PROJECT_DIR$/APP/Service/access_token.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/APP/Service/driverpublishController.js" beforeDir="false" afterPath="$PROJECT_DIR$/APP/Service/driverpublishController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Config/config.js" beforeDir="false" afterPath="$PROJECT_DIR$/Config/config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/APP/Service/passengerPublishController.js" beforeDir="false" afterPath="$PROJECT_DIR$/APP/Service/passengerPublishController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/app.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,6 +71,8 @@
       <workItem from="1609865447529" duration="3000" />
       <workItem from="1617414387802" duration="1206000" />
       <workItem from="1618652160487" duration="2000" />
+      <workItem from="1620199795473" duration="635000" />
+      <workItem from="1620280683958" duration="624000" />
     </task>
     <servers />
   </component>

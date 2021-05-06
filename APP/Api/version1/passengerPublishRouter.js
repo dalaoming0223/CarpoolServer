@@ -7,7 +7,7 @@ const router = new Router({
 })
 
 router.post('/add', async(ctx, next) => {
-  console.log('执行添加')
+  console.log('执行passenger_publish添加')
   await passengerPublishController.add_passengerPublish(ctx, next)
 })
 

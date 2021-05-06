@@ -151,19 +151,12 @@ class driverPublishController {
           }]
         })
       }
-
-      // console.log(queryResult)
       ret_data = {
         'queryResult': queryResult
       }
-      // ctx.body = {
-      //   queryResult
-      // }
-      // response(ctx, ret_data, 200)
       response(ctx, ret_data, 200)
     } catch (error) {
       console.log(error)
-      // ctx.response.status = 400
       response(ctx, ret_data, 400)
     }
   }
@@ -207,6 +200,37 @@ class driverPublishController {
     }
   }
 
+  static async get_driverPublish_by_id(ctx) {
+    let ret_data = {}
+    let id = ctx.request.params.id
+    let queryResult = null
+    try {
+      queryResult = await driverPublish.findOne({
+        where:{
+          id
+        },          
+        include: [{
+          model: driverPublishParticipator,
+          // as: 'driverPublishParticipator',
+          // attributes: ['user_id'
+          // ]
+          include: [{
+            association: driverPublishParticipator.belongsTo(User, {
+              foreignKey: 'user_id',
+            }),
+            attributes: ['avatar_url', 'nick_name', 'openid'],
+          }]
+        }]
+      })
+      ret_data['queryResult'] = queryResult
+      response(ctx, ret_data, 200)
+      
+    } catch (error) {
+      console.log(error)
+      response(ctx, ret_data, 400)
+    }
+  }
+
   static async delete_driverPublish(ctx) {
     let ret_data = {}
     let driver_publish_id = ctx.request.params.id
@@ -242,6 +266,7 @@ class driverPublishController {
 
   static async update_driverPublish(ctx) {
     let ret_data = {}
+    let id = ctx.request.params.id
     let {
       start,
       end,
@@ -252,8 +277,67 @@ class driverPublishController {
       phone,
       note
     } = ctx.request.body.formData
-    let updated_at =
-      console.log(ctx.req)
+    let start_time = date + ' ' + time
+    const start_address = ctx.request.body.formData.startAddressInfo.address
+    const start_name = ctx.request.body.formData.startAddressInfo.name
+    const start_city = ctx.request.body.formData.startAddressInfo.addressComponent.city
+    const start_district = ctx.request.body.formData.startAddressInfo.addressComponent.district
+    const start_nation = ctx.request.body.formData.startAddressInfo.addressComponent.nation
+    const start_province = ctx.request.body.formData.startAddressInfo.addressComponent.province
+    const start_street = ctx.request.body.formData.startAddressInfo.addressComponent.street
+    const start_streetnumber = ctx.request.body.formData.startAddressInfo.addressComponent.street_number
+    const start_latitude = ctx.request.body.formData.startAddressInfo.latitude
+    const start_longitude = ctx.request.body.formData.startAddressInfo.longitude
+
+    const end_address = ctx.request.body.formData.endAddressInfo.address
+    const end_name = ctx.request.body.formData.endAddressInfo.name
+    const end_city = ctx.request.body.formData.endAddressInfo.addressComponent.city
+    const end_district = ctx.request.body.formData.endAddressInfo.addressComponent.district
+    const end_nation = ctx.request.body.formData.endAddressInfo.addressComponent.nation
+    const end_province = ctx.request.body.formData.endAddressInfo.addressComponent.province
+    const end_street = ctx.request.body.formData.endAddressInfo.addressComponent.street
+    const end_streetnumber = ctx.request.body.formData.endAddressInfo.addressComponent.street_number
+    const end_latitude = ctx.request.body.formData.endAddressInfo.latitude
+    const end_longitude = ctx.request.body.formData.endAddressInfo.longitude
+    let queryResult = null
+    try {
+      queryResult = await driverPublish.update({
+        phone,
+        price,
+        personNum: surplusSeat,
+        start_name,
+        start_time,
+        start_address,
+        start_city,
+        start_district,
+        start_nation,
+        start_province,
+        start_street,
+        start_streetnumber,
+        start_latitude,
+        start_longitude,
+        end_name,
+        end_address,
+        end_city,
+        end_district,
+        end_nation,
+        end_province,
+        end_street,
+        end_streetnumber,
+        end_latitude,
+        end_longitude,
+        note,
+      },
+      {where: {
+        id:id
+      }
+      })
+      ret_data['queryResult'] = queryResult
+      response(ctx, ret_data, 200, 1)  
+    } catch (error) {
+      response(ctx, ret_data, 400)  
+    }
+    
   }
 
   static async add_driverPublish_participator(ctx) {

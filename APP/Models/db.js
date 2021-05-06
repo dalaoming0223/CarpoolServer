@@ -9,6 +9,7 @@ const {bbsView} = require("../Models/bbsviewModel")
 const {Driver} = require('../Models/driverModel')
 const {driverPublishParticipator} = require('../Models/participatorModel')
 const {contactPeople} = require('../Models/contactpeopleModel')
+const {Admin} = require('../Models/adminModel')
 
 
 sequelize.authenticate()
@@ -52,5 +53,6 @@ sequelize.authenticate()
     bbsView,
     Driver,
     driverPublishParticipator,
-    contactPeople
+    contactPeople,
+    Admin
   }

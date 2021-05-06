@@ -16,7 +16,7 @@ const app = new Koa()
 
 app.use(catchError)  
 app.use(Bodyparser())
-app.use(koa2cors())
+app.use(koa2cors({credentials: true, origin: ['http://localhost:9527']}))
 EntryManager.initCore(app)
 
 app.listen(3000)

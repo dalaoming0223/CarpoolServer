@@ -6,7 +6,7 @@ const { response } = require('./response')
 class passengerPublishController {
 
   static async add_passengerPublish(ctx ,next){
-    let ret_data
+    let ret_data = {}
     let {start,end,surplusSeat,price,time,date,phone,note,userid}=ctx.request.body.formData
     const start_address = ctx.request.body.formData.startAddressInfo.address
     const start_name = ctx.request.body.formData.startAddressInfo.name
@@ -29,13 +29,10 @@ class passengerPublishController {
     const end_streetnumber= ctx.request.body.formData.endAddressInfo.addressComponent.street_number
     const end_latitude = ctx.request.body.formData.endAddressInfo.latitude
     const end_longitude = ctx.request.body.formData.endAddressInfo.longitude
-    // console.log(surplusSeat instanceof Array)
-    // console.log('测试'+ start_city + end_city)
-
     try {
       let start_time = date + ' ' + time
       // console.log(start_time)
-      let passenger = await passengerPublish.create({
+      let passenger_publish = await passengerPublish.create({
         user_id: userid,
         phone,
         price,
@@ -63,23 +60,13 @@ class passengerPublishController {
         end_longitude,
         note
       })
-      // ctx.response.status = 200
-      // ctx.body = {
-      //   msg: '添加成功'
-      // }
-      ret_data.id = driverpublish.id
+
+      ret_data['passenger_publish'] = passenger_publish
       response(ctx, ret_data, 201)
     } catch (error) {
-      // console.log('加入blog时错误的信息',error)
-      // ctx.response.status = 400
-      // ctx.body = {
-      //   msg: '添加失败',
-      //   error
-      // }
-      response(ctx, ret_data , 400)
+      console.log("error", error)
+      response(ctx, ret_data, 400)
     }
-
-    ctx.response.status = 200;
   }
 
   static async get_passengerPublish_by_user_id(ctx){
@@ -137,6 +124,7 @@ class passengerPublishController {
   }
 
   static async get_all_passengerPublish(ctx){
+    let ret_data  = {}
     let queryResult = null
     let currentPage = parseInt(ctx.request.query.page) || 1
     // console.log(currentPage)
@@ -159,9 +147,8 @@ class passengerPublishController {
             attributes: ['avatar_url', 'nick_name'],
         }]
       })
-      ctx.body = {
-        queryResult
-      }
+      ret_data['queryResult'] = queryResult
+      response(ctx, ret_data, 20000)
     } catch (error) {
       ctx.response.status = 400
     }

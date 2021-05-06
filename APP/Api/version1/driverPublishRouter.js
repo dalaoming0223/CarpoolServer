@@ -21,6 +21,10 @@ router.get('/', async(ctx) => {
   await driverPublishController.get_all_driverPublish(ctx)
 })
 
+router.get('/search/:id', async(ctx) => {
+  await driverPublishController.get_driverPublish_by_id(ctx)
+})
+
 router.put('/update/:id', async(ctx) => {
   driverPublishController.update_driverPublish(ctx)
 })
