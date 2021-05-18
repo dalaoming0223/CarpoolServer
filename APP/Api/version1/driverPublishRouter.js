@@ -26,11 +26,11 @@ router.get('/search/:id', async(ctx) => {
 })
 
 router.put('/update/:id', async(ctx) => {
-  driverPublishController.update_driverPublish(ctx)
+  await driverPublishController.update_driverPublish(ctx)
 })
 
 router.delete('/delete/:id', async(ctx) => {
-  driverPublishController.delete_driverPublish(ctx)
+  await driverPublishController.delete_driverPublish(ctx)
 })
 
 // 往司机发布的订单里面加参与人

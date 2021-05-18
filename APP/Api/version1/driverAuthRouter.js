@@ -14,6 +14,10 @@ router.get('/finddriver/:userid', async(ctx) => {
   await driverAuthController.get_driver(ctx)
 })
 
+router.put('/update/:id', async(ctx) => {
+  driverAuthController.update_driver(ctx)
+})
+
 router.get('/getalluser', async(ctx) => {
   await driverAuthController.get_all_driver(ctx)
 })

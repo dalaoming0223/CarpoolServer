@@ -504,7 +504,7 @@ class driverPublishController {
 
 
     // let recent_time = formatTime(new Date(new Date(new Date().setDate(new Date().getDate() -1)).setHours(0,0,0,0)), "Y-M-D h:m:s")
-    let time = new Date(new Date(new Date().setDate(new Date().getDate() + 2)).setHours(0, 0, 0, 0))
+    let time = new Date(new Date(new Date().setDate(new Date().getDate() + 1)).setHours(0, 0, 0, 0))
     // console.log(userid)
     console.log(time)
     try {

@@ -159,6 +159,29 @@ class driverAuthController {
     }
   }
 
+  static async update_driver(ctx) {
+    let ret_data = {}
+    let id = ctx.request.params.id
+    let queryResult = null
+    let { driver_name, plate_number, phone_number, id_card, car_type} = ctx.request.body.formData
+    console.log(driver_name)
+    try {
+      queryResult = await Driver.update({
+        status:2,
+        plate_number, phone_number, driver_name, car_type,id_card
+      },
+      {where: {
+        driver_id:id
+      }
+      })
+      ret_data['queryResult'] = queryResult
+      response(ctx, ret_data, 200, 1)  
+    } catch (error) {
+      response(ctx, ret_data, 400)  
+    }
+    
+  }
+
   // 添加/查看 云开发图片的https地址
   static async update_img_http_location(fileStr) {  
     await getAccessToken()
